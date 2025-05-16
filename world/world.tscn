@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cywrsvsikaeut"]
+
+[ext_resource type="Script" uid="uid://cb7j63nyog1g7" path="res://world/world.gd" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://bepw7f46ds4jd" path="res://entities/player/player.tscn" id="2_tcf2h"]
+
+[node name="World" type="TileMapLayer"]
+script = ExtResource("1_f3sb7")
+size = Vector2(200, 200)
+seed = 801102
+
+[node name="Player" parent="." instance=ExtResource("2_tcf2h")]
+
+[node name="Tiles" type="Node" parent="."]
