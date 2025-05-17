@@ -2,8 +2,8 @@ class_name TilePebble
 extends Tile
 
 var has_peebles
-func _init(x: int, y: int):
-	super._init(x, y)
+func _init(position: Vector2i):
+	super._init(position)
 	can_walk = false
 	texture = load("res://assets/tiles/pebble/enabled.png")
 	

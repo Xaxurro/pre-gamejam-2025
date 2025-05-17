@@ -5,31 +5,31 @@ const TILE_PIXEL_SIZE = 16
 var should_render: bool = true
 var texture: Texture2D
 var temperature
-var grid_x: int
-var grid_y: int
+var grid_position: Vector2i
 var can_walk: bool
 
-func _init(x: int, y: int):
-	grid_x = x
-	grid_y = y
+func _init(position: Vector2i):
+	grid_position.x = position.x
+	grid_position.y = position.y
 
-static func new_tile(x: int, y: int, world_noise: WorldNoise):
-	var continentality = world_noise.get_continent(x, y)
-	var temperature = world_noise.get_temperature(x, y)
+static func new_tile(position: Vector2i):
+	var _noise_continentality = WorldNoise.get_continent_category(position)
+	var _noise_temperature = WorldNoise.get_temperature_category(position)
+	var _noise_vegetation = WorldNoise.get_vegetation_category(position)
 	
-	if continentality == Continentality.MOUNTAIN:
-		return TileMountain.new(x, y, temperature)
-	if continentality == Continentality.PLAINS:
-		return TilePlains.new(x, y, temperature)
-	if continentality == Continentality.OCEAN:
-		return TileOcean.new(x, y, temperature)
-	return TilePlains.new(x, y, Temperature.MILD)
+	if _noise_continentality == Continentality.MOUNTAIN:
+		return TileMountain.new(position, _noise_temperature)
+	if _noise_continentality == Continentality.PLAINS:
+		return TilePlains.new(position, _noise_temperature)
+	if _noise_continentality == Continentality.OCEAN:
+		return TileOcean.new(position, _noise_temperature)
+	return TilePlains.new(position, Temperature.MILD)
 
 func is_type(other_tile: Script) -> bool:
 	return self.get_script() == other_tile
 
 func _ready():
-	position = Vector2(grid_x * TILE_PIXEL_SIZE, grid_y * TILE_PIXEL_SIZE)
+	position = Vector2(grid_position.x * TILE_PIXEL_SIZE, grid_position.y * TILE_PIXEL_SIZE)
 
 func _draw():
 	if should_render and texture:

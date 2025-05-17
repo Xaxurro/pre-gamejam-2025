@@ -1,10 +1,10 @@
-class_name Continentality
+class_name Vegetation
 extends RefCounted
 
 enum {
-	MOUNTAIN,
-	PLAINS,
-	OCEAN
+	A_LOT,
+	NORMAL,
+	LITTLE
 }
 
 static var highest: float = 0.0
@@ -12,22 +12,21 @@ static func _set_highest(new_value: float) -> void: highest = new_value
 static var lowest: float = 0.0
 static func _set_lowest(new_value: float) -> void: lowest = new_value
 
-
 static func print_generated_values() -> void:
-	print("Highest Continentality:",Continentality.highest)
-	print("Lowest Continentality:",Continentality.lowest)
+	print("Highest Vegetation:",Vegetation.highest)
+	print("Lowest Vegetation:",Vegetation.lowest)
 
 static var limits = {
-	Continentality.MOUNTAIN: {
+	Vegetation.A_LOT: {
 		upper_limit = 1.0,
 		lower_limit = 0.5
 	},
-	Continentality.PLAINS: {
+	Vegetation.NORMAL: {
 		upper_limit = 0.5,
-		lower_limit = -0.25
+		lower_limit = -0.5
 	},
-	Continentality.OCEAN: {
-		upper_limit = -0.25,
+	Vegetation.LITTLE: {
+		upper_limit = -0.5,
 		lower_limit = -1.0
 	}
 }
@@ -42,4 +41,4 @@ static func get_category_index(value: float) -> int:
 		var category: Dictionary = limits[index]
 		if value >= category.lower_limit and value <= category.upper_limit:
 			return index
-	return PLAINS
+	return NORMAL
